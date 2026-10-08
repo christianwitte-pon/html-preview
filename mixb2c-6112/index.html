@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MIXB2C-6112 — Erklär-/Teaser-Element — Mockups</title>
+<style>
+  @font-face {
+    font-family: 'NeueDIN';
+    src: url('./NeueDINVAR.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* Tokens lifted from tailwind.config.js */
+  :root {
+    --black: #000000;
+    --white: #ffffff;
+    --gray: #dddddd;
+    --gray-light: #f3f3f3;
+    --gray-dark: #ababab;
+    --gray-darker: #333333;
+
+    --text-h2-mobile: 1.75rem;
+    --text-h2-desktop: 2rem;
+    --text-h4-mobile: 1.25rem;
+    --text-h4-desktop: 1.5rem;
+    --text-h5: 1.125rem;
+    --text-p-mobile: 0.9375rem;
+    --text-p-desktop: 1rem;
+    --text-p-small: 0.75rem;
+
+    --wrap-x: 25px;
+    --card-gap: 20px;
+    --card-pad: 25px;
+  }
+
+  @media (min-width: 768px) {
+    :root { --wrap-x: 60px; --card-gap: 25px; --card-pad: 30px; }
+  }
+  @media (min-width: 1200px) {
+    :root { --wrap-x: 120px; }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'NeueDIN', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: var(--text-p-mobile);
+    line-height: 1.5;
+    color: var(--black);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (min-width: 768px) { body { font-size: var(--text-p-desktop); } }
+
+  /* ---------- Mockup chrome (not part of the element) ---------- */
+
+  .doc-head {
+    padding: 35px var(--wrap-x);
+    background: var(--black);
+    color: var(--white);
+  }
+  .doc-head h1 {
+    margin: 0 0 10px;
+    font-size: var(--text-h2-mobile);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  @media (min-width: 768px) { .doc-head h1 { font-size: var(--text-h2-desktop); } }
+  .doc-head p { margin: 0; max-width: 70ch; color: var(--gray); }
+  .doc-head strong { color: var(--white); }
+
+  .doc-section { padding: 45px var(--wrap-x) 10px; }
+  .doc-section h2 {
+    margin: 0 0 6px;
+    font-size: var(--text-h4-mobile);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  @media (min-width: 768px) { .doc-section h2 { font-size: var(--text-h4-desktop); } }
+  .doc-section p { margin: 0; max-width: 75ch; color: var(--gray-darker); }
+
+  .doc-label {
+    padding: 25px var(--wrap-x) 12px;
+    font-size: var(--text-p-small);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-dark);
+  }
+
+  .doc-stage { padding: 0 var(--wrap-x) 20px; }
+  .doc-rule { height: 1px; margin: 40px var(--wrap-x) 0; background: var(--gray); border: 0; }
+
+  /* ================= THE ELEMENT =================== */
+
+  .teaser-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--card-gap);
+    grid-auto-rows: 1fr;      /* equal height without JS */
+  }
+  @media (min-width: 768px) {
+    .teaser-row--2 { grid-template-columns: repeat(2, 1fr); }
+    .teaser-row--3 { grid-template-columns: repeat(3, 1fr); }
+    .teaser-row--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .teaser-row--4 { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .teaser {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0;
+    transition: background-color .3s ease, border-color .3s ease;
+  }
+
+  /* Frame treatment 1 — outline */
+  .teaser--outline { background: var(--white); border: 1px solid var(--black); }
+  /* Frame treatment 2 — grey fill */
+  .teaser--grey { background: var(--gray-light); border: 1px solid transparent; }
+
+  .teaser__media { display: block; flex: 0 0 auto; overflow: hidden; background: var(--gray-light); }
+  .teaser__media img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+    transition: transform .4s ease;
+  }
+  .teaser:hover .teaser__media img { transform: scale(1.04); }
+
+  .teaser__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding: var(--card-pad);
+    min-width: 0;
+  }
+
+  .teaser__headline {
+    margin: 0 0 12px;
+    font-size: var(--text-h5);
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: uppercase;
+    hyphens: auto;
+  }
+  @media (min-width: 768px) {
+    .teaser__headline { font-size: var(--text-h4-mobile); }
+  }
+
+  .teaser__text { margin: 0; color: var(--gray-darker); }
+
+  /* Pins every CTA to the bottom, so they align across a row */
+  .teaser__action { margin-top: auto; padding-top: 25px; }
+
+  .teaser__button {
+    display: inline-block;
+    padding: 10px 30px;
+    border: 1px solid var(--black);
+    background: var(--black);
+    color: var(--white);
+    font-size: var(--text-p-mobile);
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all .3s ease;
+  }
+  .teaser__button:hover { background: var(--white); color: var(--black); }
+  .teaser--grey .teaser__button:hover { background: var(--gray-light); }
+
+  .teaser__arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: var(--text-p-mobile);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+    border-bottom: 2px solid var(--black);
+    padding-bottom: 3px;
+  }
+  .teaser__arrow span { transition: transform .3s ease; }
+  .teaser__arrow:hover span { transform: translateX(4px); }
+
+  /* --- Version C: picture beside the text --- */
+  @media (min-width: 768px) {
+    .teaser--side { flex-direction: row; align-items: stretch; }
+    .teaser--side .teaser__media { flex: 0 0 42%; }
+    .teaser--side .teaser__media img { height: 100%; aspect-ratio: auto; }
+    .teaser--side .teaser__body { flex: 1 1 auto; }
+  }
+
+  /* --- Version D: compact --- */
+  .teaser--compact .teaser__headline { font-size: var(--text-p-desktop); }
+  .teaser--compact .teaser__body { padding: 20px; }
+  @media (min-width: 768px) {
+    .teaser--compact .teaser__headline { font-size: var(--text-h5); }
+  }
+</style>
+</head>
+<body>
+
+<header class="doc-head">
+  <h1>MIXB2C-6112 — Erklär-/Teaser-Element</h1>
+  <p>
+    Vier Varianten eines Erklär-Elements mit <strong>Rahmen</strong>, Headline, Text,
+    optionalem Link und optionalem Bild. Jede Variante wird in zwei Rahmen-Ausführungen
+    gezeigt: <strong>Outline</strong> (1px schwarz auf weiß) und <strong>Grauflächig</strong> (#f3f3f3).
+    Schrift, Farben und Abstände stammen aus dem echten FOCUS Design
+    (<strong>NeueDIN</strong>, <code>tailwind.config.js</code>), Texte und Bilder von der
+    Seite <strong>Welcome Partner</strong>. Die Texte sind bewusst
+    <strong>unterschiedlich lang</strong> — so wird sichtbar, dass Kacheln gleich hoch
+    bleiben und die Buttons trotzdem auf einer Linie liegen.
+  </p>
+</header>
+
+<!-- =================== VERSION A =================== -->
+<section class="doc-section">
+  <h2>Version A — Bild oben</h2>
+  <p>Bild, Headline, Text, Button. Der direkte Ersatz für die aktuellen 3er- und 4er-Reihen auf der Welcome-Partner-Seite.</p>
+</section>
+
+<div class="doc-label">A1 — Rahmen: Outline</div>
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--3">
+    <article class="teaser teaser--outline">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1000x800/565169598f/partner-program.jpg/m/760x570/filters:quality(80)" alt="FOCUS Partner Programm">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Mehr Engagement. Mehr Unterstützung. Mehr Wachstum.</h3>
+        <p class="teaser__text">Das FOCUS Partner Programm wurde entwickelt, um Engagement zu belohnen und in die Partner zu investieren, die mit uns wachsen wollen. Je stärker dein Engagement für FOCUS, desto stärker unser Engagement für dein Geschäft.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">FOCUS Partner Programm</a></div>
+      </div>
+    </article>
+
+    <article class="teaser teaser--outline">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/4cdcb005ce/_h4a7684-3.jpg/m/760x570/filters:quality(80)" alt="Demo Truck Tour">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Dein Event mit einer kompletten Testflotte von uns</h3>
+        <p class="teaser__text">Gib deinem Event einen extra Push mit 15 Testrädern. Unser Demo Truck bietet eine ideale Gelegenheit, mehr Menschen durch Testfahrten zu begeistern. Einfach vor der Saison beantragen.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Demo Truck Tour</a></div>
+      </div>
+    </article>
+
+    <article class="teaser teaser--outline">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/0042d1fbde/my24-focus-izalco-max-9-9-izalco-max-9-8-mike-vlietstra-7683-1.jpg/m/760x570/filters:quality(80)" alt="Local Hero Programm">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Hol dir zwei Räder für deine Local Heroes</h3>
+        <p class="teaser__text">Zwei Räder zum speziellen Preis. Statte damit deine lokalen Meinungsführer:innen aus, veranstalte Community Rides und profitiere von ihrer Social Media-Präsenz.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Local Hero Programm</a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="doc-label">A2 — Rahmen: Graufläche</div>
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--3">
+    <article class="teaser teaser--grey">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1000x800/565169598f/partner-program.jpg/m/760x570/filters:quality(80)" alt="FOCUS Partner Programm">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Mehr Engagement. Mehr Unterstützung. Mehr Wachstum.</h3>
+        <p class="teaser__text">Das FOCUS Partner Programm wurde entwickelt, um Engagement zu belohnen und in die Partner zu investieren, die mit uns wachsen wollen. Je stärker dein Engagement für FOCUS, desto stärker unser Engagement für dein Geschäft.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">FOCUS Partner Programm</a></div>
+      </div>
+    </article>
+
+    <article class="teaser teaser--grey">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/4cdcb005ce/_h4a7684-3.jpg/m/760x570/filters:quality(80)" alt="Demo Truck Tour">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Dein Event mit einer kompletten Testflotte von uns</h3>
+        <p class="teaser__text">Gib deinem Event einen extra Push mit 15 Testrädern. Unser Demo Truck bietet eine ideale Gelegenheit, mehr Menschen durch Testfahrten zu begeistern. Einfach vor der Saison beantragen.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Demo Truck Tour</a></div>
+      </div>
+    </article>
+
+    <article class="teaser teaser--grey">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/0042d1fbde/my24-focus-izalco-max-9-9-izalco-max-9-8-mike-vlietstra-7683-1.jpg/m/760x570/filters:quality(80)" alt="Local Hero Programm">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Hol dir zwei Räder für deine Local Heroes</h3>
+        <p class="teaser__text">Zwei Räder zum speziellen Preis. Statte damit deine lokalen Meinungsführer:innen aus, veranstalte Community Rides und profitiere von ihrer Social Media-Präsenz.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Local Hero Programm</a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<hr class="doc-rule">
+
+<!-- =================== VERSION B =================== -->
+<section class="doc-section">
+  <h2>Version B — Ohne Bild</h2>
+  <p>Headline, Text, Button im Rahmen. Für reine Textabschnitte — entspricht inhaltlich dem Kalkhoff-Element <code>service_item</code>. Hier mit vier Elementen und sehr unterschiedlich langen Texten.</p>
+</section>
+
+<div class="doc-label">B1 — Rahmen: Outline</div>
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--4">
+    <article class="teaser teaser--outline">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Bestelle Bikes, Ersatz- und Anbauteile</h3>
+        <p class="teaser__text">Unser Dealer Portal bietet dir die Möglichkeit, einfach und schnell alle Bikes zu bestellen. Außerdem findest du alle Ersatzteile und speziellen Anbauteile von FOCUS im System. Es vereint Shop und Informationssystem in einem.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Dealer Portal</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--outline">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Übersicht aktuelle und zukünftige Bikes</h3>
+        <p class="teaser__text">Der schnellste Überblick über unser aktuelles Portfolio und ein Blick in die Zukunft. Im ans Dealer Portal angegliederten Lineup findest du auch alle Infos zu noch unveröffentlichten Rädern.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Lineup</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--outline">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Alle visuellen Materialien zum Download</h3>
+        <p class="teaser__text">Hier findest du alle Bilder und Materialien zu unseren Bikes und Kampagnen. Mit der einfachen Stichwort-Suche findest du alles, was du benötigst.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Media Brand Portal</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--outline">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Unser Kommunikations-Kanal</h3>
+        <p class="teaser__text">HubSpot ist das Kontaktportal für unseren Service.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Kontaktformular</a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="doc-label">B2 — Rahmen: Graufläche</div>
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--4">
+    <article class="teaser teaser--grey">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Bestelle Bikes, Ersatz- und Anbauteile</h3>
+        <p class="teaser__text">Unser Dealer Portal bietet dir die Möglichkeit, einfach und schnell alle Bikes zu bestellen. Außerdem findest du alle Ersatzteile und speziellen Anbauteile von FOCUS im System. Es vereint Shop und Informationssystem in einem.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Dealer Portal</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--grey">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Übersicht aktuelle und zukünftige Bikes</h3>
+        <p class="teaser__text">Der schnellste Überblick über unser aktuelles Portfolio und ein Blick in die Zukunft. Im ans Dealer Portal angegliederten Lineup findest du auch alle Infos zu noch unveröffentlichten Rädern.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Lineup</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--grey">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Alle visuellen Materialien zum Download</h3>
+        <p class="teaser__text">Hier findest du alle Bilder und Materialien zu unseren Bikes und Kampagnen. Mit der einfachen Stichwort-Suche findest du alles, was du benötigst.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Media Brand Portal</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--grey">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Unser Kommunikations-Kanal</h3>
+        <p class="teaser__text">HubSpot ist das Kontaktportal für unseren Service.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Kontaktformular</a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<hr class="doc-rule">
+
+<!-- =================== VERSION C =================== -->
+<section class="doc-section">
+  <h2>Version C — Bild seitlich</h2>
+  <p>Bild links, Text rechts. Für ein bis zwei Elemente pro Reihe und für längere Erklärungen. Auf dem Smartphone rutscht das Bild automatisch nach oben.</p>
+</section>
+
+<div class="doc-label">C1 — Rahmen: Outline</div>
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--2">
+    <article class="teaser teaser--outline teaser--side">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/f7c790f9a6/focus-my25-thron2_h4a1573.jpg/m/560x600/filters:quality(80)" alt="FAQ für alle Räder">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">FAQ für alle Räder</h3>
+        <p class="teaser__text">Alle Antworten auf deine Fragen zu Technik und Service findest du ganz unten auf den Familien- und Produktseiten.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Zu den FAQ</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--outline teaser--side">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/3dbab75b0e/focus_my26_aventura2-fs-431-2.jpg/m/560x600/filters:quality(80)" alt="Fahrwerk-Setup">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Empfehlungen fürs Fahrwerk-Setup</h3>
+        <p class="teaser__text">Für das bestmögliche Fahrerlebnis: Die empfohlenen Fahrwerkseinstellungen findest du auf den Produktseiten der E-Mountainbikes direkt neben Ausstattung und Geometrie.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Zum Setup</a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="doc-label">C2 — Rahmen: Graufläche</div>
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--2">
+    <article class="teaser teaser--grey teaser--side">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/f7c790f9a6/focus-my25-thron2_h4a1573.jpg/m/560x600/filters:quality(80)" alt="FAQ für alle Räder">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">FAQ für alle Räder</h3>
+        <p class="teaser__text">Alle Antworten auf deine Fragen zu Technik und Service findest du ganz unten auf den Familien- und Produktseiten.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Zu den FAQ</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--grey teaser--side">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/3dbab75b0e/focus_my26_aventura2-fs-431-2.jpg/m/560x600/filters:quality(80)" alt="Fahrwerk-Setup">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Empfehlungen fürs Fahrwerk-Setup</h3>
+        <p class="teaser__text">Für das bestmögliche Fahrerlebnis: Die empfohlenen Fahrwerkseinstellungen findest du auf den Produktseiten der E-Mountainbikes direkt neben Ausstattung und Geometrie.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Zum Setup</a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<hr class="doc-rule">
+
+<!-- =================== VERSION D =================== -->
+<section class="doc-section">
+  <h2>Version D — Kompakt</h2>
+  <p>Headline, kurzer Text, Textlink mit Pfeil statt Button. Für dichte 4er-Reihen mit kurzen Hinweisen — ersetzt den Abschnitt „Relevante Informationen auf unserer Website“.</p>
+</section>
+
+<div class="doc-label">D1 — Rahmen: Outline</div>
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--4">
+    <article class="teaser teaser--outline teaser--compact">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">FAQ für alle Räder</h3>
+        <p class="teaser__text">Alle Antworten auf deine Fragen zu Technik und Service findest du ganz unten auf den Familien- und Produktseiten.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--outline teaser--compact">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Empfehlungen fürs Fahrwerk-Setup</h3>
+        <p class="teaser__text">Für das bestmögliche Fahrerlebnis: Die empfohlenen Einstellungen findest du auf den Produktseiten der E-Mountainbikes.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--outline teaser--compact">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Explosionszeichnungen</h3>
+        <p class="teaser__text">Auf der Produktseite findest du unter „Technische Hilfe“ Explosionszeichnungen, mit denen du jedes Bauteil ganz einfach zuordnen kannst.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--outline teaser--compact">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Größenfinder</h3>
+        <p class="teaser__text">Nutze „Finde deine Größe“ direkt unter der Größenauswahl.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="doc-label">D2 — Rahmen: Graufläche</div>
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--4">
+    <article class="teaser teaser--grey teaser--compact">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">FAQ für alle Räder</h3>
+        <p class="teaser__text">Alle Antworten auf deine Fragen zu Technik und Service findest du ganz unten auf den Familien- und Produktseiten.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--grey teaser--compact">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Empfehlungen fürs Fahrwerk-Setup</h3>
+        <p class="teaser__text">Für das bestmögliche Fahrerlebnis: Die empfohlenen Einstellungen findest du auf den Produktseiten der E-Mountainbikes.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--grey teaser--compact">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Explosionszeichnungen</h3>
+        <p class="teaser__text">Auf der Produktseite findest du unter „Technische Hilfe“ Explosionszeichnungen, mit denen du jedes Bauteil ganz einfach zuordnen kannst.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--grey teaser--compact">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Größenfinder</h3>
+        <p class="teaser__text">Nutze „Finde deine Größe“ direkt unter der Größenauswahl.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<hr class="doc-rule">
+
+<section class="doc-section" style="padding-bottom:60px;">
+  <h2>Mischung in einer Reihe</h2>
+  <p>Zum Prüfen der Anforderung „sieht gut aus, wenn mehrere gleiche Elemente neben- oder untereinander stehen“: drei Elemente mit und ohne Bild, mit sehr unterschiedlich langen Texten — Kachelhöhe und Button-Linie bleiben gleich.</p>
+</section>
+<div class="doc-stage" style="padding-bottom:80px;">
+  <div class="teaser-row teaser-row--3">
+    <article class="teaser teaser--outline">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/636ba8c6b3/focus-events-cyclingworld2026-04045-wiederhergestellt.jpg/m/760x570/filters:quality(80)" alt="Größenfinder">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Größenfinder</h3>
+        <p class="teaser__text">Nutze auf den Produktseiten einfach die Funktion „Finde deine Größe“ direkt unter der Größenauswahl, um die perfekte Rahmengröße für deine Kund:innen zu finden.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Zur Auswahl</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--outline">
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Unser Kommunikations-Kanal</h3>
+        <p class="teaser__text">HubSpot ist das Kontaktportal für unseren Service.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Kontaktformular</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--outline">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/ddbf987d50/md_22noveld8g01efpi.jpg/m/760x570/filters:quality(80)" alt="Explosionszeichnungen">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Explosionszeichnungen</h3>
+        <p class="teaser__text">Auf der Produktseite des jeweiligen Rads findest du unter „Technische Hilfe“ Explosionszeichnungen, mit denen du jedes Bauteil ganz einfach zuordnen kannst.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Zur Sammlung</a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+</body>
+</html>
