@@ -8,7 +8,8 @@ Static HTML design mockups, published via GitHub Pages for review.
 
 | Ticket | Preview | Description |
 |---|---|---|
-| MIXB2C-6112 | [mixb2c-6112](https://christianwitte-pon.github.io/html-preview/mixb2c-6112/) | Explanation / teaser element with frame — four versions, two frame treatments |
+| MIXB2C-6112 | [mixb2c-6112](https://christianwitte-pon.github.io/html-preview/mixb2c-6112/) | Explanation / teaser element with frame — four versions, two frame treatments, current FOCUS style |
+| MIXB2C-6112 | [mixb2c-6112/playful](https://christianwitte-pon.github.io/html-preview/mixb2c-6112/playful.html) | Same element, playful treatment — rounded frames, rotating accent colours, pill buttons |
 
 ## Adding a preview
 

@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MIXB2C-6112 — Erklär-/Teaser-Element — Playful</title>
+<style>
+  @font-face {
+    font-family: 'NeueDIN';
+    src: url('./NeueDINVAR.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --ink: #0e0e12;
+    --cream: #f6f3ea;
+    --white: #ffffff;
+
+    --lime: #d4ff2e;
+    --blue: #2440ff;
+    --coral: #ff5a3c;
+    --violet: #7b5cff;
+    --sky: #9fe8ff;
+
+    --text-h2-mobile: 1.75rem;
+    --text-h2-desktop: 2.25rem;
+    --text-h4-mobile: 1.25rem;
+    --text-h4-desktop: 1.5rem;
+    --text-h5: 1.125rem;
+    --text-p-mobile: 0.9375rem;
+    --text-p-desktop: 1rem;
+    --text-p-small: 0.75rem;
+
+    --wrap-x: 20px;
+    --card-gap: 18px;
+    --card-pad: 22px;
+    --radius: 18px;
+  }
+
+  @media (min-width: 768px) {
+    :root { --wrap-x: 50px; --card-gap: 22px; --card-pad: 26px; --radius: 22px; }
+  }
+  @media (min-width: 1200px) {
+    :root { --wrap-x: 90px; }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'NeueDIN', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: var(--text-p-mobile);
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (min-width: 768px) { body { font-size: var(--text-p-desktop); } }
+
+  /* ---------- Mockup chrome (not part of the element) ---------- */
+
+  .doc-head {
+    position: relative;
+    overflow: hidden;
+    padding: 45px var(--wrap-x);
+    background: var(--ink);
+    color: var(--white);
+  }
+  .doc-head::after {
+    content: '';
+    position: absolute;
+    right: -90px;
+    top: -90px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--violet), transparent 65%);
+    opacity: .75;
+  }
+  .doc-head h1 {
+    position: relative;
+    margin: 0 0 12px;
+    font-size: var(--text-h2-mobile);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+  }
+  @media (min-width: 768px) { .doc-head h1 { font-size: var(--text-h2-desktop); } }
+  .doc-head h1 em { font-style: normal; color: var(--lime); }
+  .doc-head p { position: relative; margin: 0; max-width: 70ch; color: #c9c7d1; }
+  .doc-head strong { color: var(--white); }
+
+  .doc-backlink {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 18px;
+    font-size: var(--text-p-small);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lime);
+    text-decoration: none;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 2px;
+  }
+
+  .doc-section { padding: 48px var(--wrap-x) 10px; }
+  .doc-section h2 {
+    display: inline-block;
+    margin: 0 0 8px;
+    padding: 4px 14px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--white);
+    font-size: var(--text-h5);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  @media (min-width: 768px) { .doc-section h2 { font-size: var(--text-h4-mobile); } }
+  .doc-section p { margin: 0; max-width: 75ch; color: #4a4a55; }
+
+  .doc-label {
+    padding: 26px var(--wrap-x) 12px;
+    font-size: var(--text-p-small);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8c8a96;
+  }
+
+  .doc-stage { padding: 0 var(--wrap-x) 20px; }
+  .doc-rule { height: 2px; margin: 44px var(--wrap-x) 0; background: var(--ink); border: 0; opacity: .12; }
+
+  /* ================= THE ELEMENT =================== */
+
+  .teaser-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--card-gap);
+    grid-auto-rows: 1fr;      /* equal height without JS */
+  }
+  @media (min-width: 768px) {
+    .teaser-row--2 { grid-template-columns: repeat(2, 1fr); }
+    .teaser-row--3 { grid-template-columns: repeat(3, 1fr); }
+    .teaser-row--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .teaser-row--4 { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .teaser {
+    --accent: var(--lime);
+    --on-accent: var(--ink);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0;
+    border-radius: var(--radius);
+    background: var(--white);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .teaser:hover { transform: translateY(-5px); }
+
+  /* Accent rotation — a row is colourful without the author picking colours */
+  .teaser:nth-child(4n+1) { --accent: var(--lime);   --on-accent: var(--ink); }
+  .teaser:nth-child(4n+2) { --accent: var(--blue);   --on-accent: var(--white); }
+  .teaser:nth-child(4n+3) { --accent: var(--coral);  --on-accent: var(--white); }
+  .teaser:nth-child(4n+4) { --accent: var(--violet); --on-accent: var(--white); }
+
+  .teaser__media {
+    display: block;
+    flex: 0 0 auto;
+    overflow: hidden;
+    background: var(--accent);
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .teaser__media img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+    transition: transform .5s ease;
+  }
+  .teaser:hover .teaser__media img { transform: scale(1.05); }
+
+  .teaser__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding: var(--card-pad);
+    min-width: 0;
+  }
+
+  .teaser__tag {
+    align-self: flex-start;
+    margin: 0 0 12px;
+    padding: 3px 12px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: var(--text-p-small);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .teaser__headline {
+    margin: 0 0 10px;
+    font-size: var(--text-h5);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    hyphens: auto;
+  }
+  @media (min-width: 768px) {
+    .teaser__headline { font-size: var(--text-h4-mobile); }
+  }
+
+  .teaser__text { margin: 0; color: #50505c; }
+
+  /* Pins every CTA to the bottom, so they align across a row */
+  .teaser__action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 22px;
+  }
+
+  .teaser__button {
+    display: inline-block;
+    padding: 11px 24px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: var(--text-p-mobile);
+    font-weight: 800;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    transition: background-color .25s ease, color .25s ease, transform .25s ease;
+  }
+  .teaser__button:hover { background: var(--ink); color: var(--white); }
+
+  .teaser__circle {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--ink);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color .25s ease, color .25s ease, transform .25s ease;
+  }
+  .teaser__circle:hover { background: var(--accent); color: var(--on-accent); transform: rotate(-12deg); }
+
+  .teaser__arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    font-size: var(--text-p-mobile);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 2px;
+  }
+  .teaser__arrow span { transition: transform .25s ease; }
+  .teaser__arrow:hover span { transform: translateX(5px); }
+
+  /* --- P1: solid colour block, image on top --- */
+  /* Border matches the fill: invisible, but keeps the box geometry identical to
+     the bordered variants so CTAs align when both appear in one row. */
+  .teaser--block { background: var(--accent); color: var(--on-accent); border: 2px solid var(--accent); }
+  .teaser--block .teaser__media { border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0; }
+  .teaser--block .teaser__text { color: inherit; opacity: .85; }
+  .teaser--block .teaser__tag { background: var(--on-accent); color: var(--accent); }
+  .teaser--block .teaser__button { background: var(--on-accent); color: var(--accent); border-color: var(--on-accent); }
+  .teaser--block .teaser__button:hover { background: transparent; color: var(--on-accent); }
+
+  /* --- P2: outline card with a sticker --- */
+  .teaser--sticker { border: 2px solid var(--ink); overflow: visible; }
+  .teaser--sticker .teaser__media { border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0; }
+  .teaser__sticker {
+    position: absolute;
+    z-index: 2;
+    top: -14px;
+    right: -10px;
+    padding: 7px 14px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: var(--text-p-small);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transform: rotate(-6deg);
+  }
+
+  /* --- P3: no image, big index number --- */
+  .teaser--numbered { border: 2px solid var(--ink); }
+  .teaser__index {
+    display: block;
+    margin: 0 0 6px;
+    font-size: 2.75rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    -webkit-text-stroke: 1.5px var(--ink);
+  }
+
+  /* --- P4: compact pill row --- */
+  .teaser--compact { border: 2px solid var(--ink); }
+  .teaser--compact .teaser__body { padding: 20px; }
+  .teaser--compact .teaser__headline { font-size: var(--text-p-desktop); }
+  @media (min-width: 768px) {
+    .teaser--compact .teaser__headline { font-size: var(--text-h5); }
+  }
+  .teaser--compact .teaser__bar {
+    height: 8px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: var(--accent);
+  }
+
+  /* --- P5: picture beside the text --- */
+  @media (min-width: 768px) {
+    .teaser--side { flex-direction: row; align-items: stretch; }
+    .teaser--side .teaser__media {
+      flex: 0 0 42%;
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+    .teaser--side .teaser__media img { height: 100%; aspect-ratio: auto; }
+    .teaser--side .teaser__body { flex: 1 1 auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="doc-head">
+  <a class="doc-backlink" href="./">&larr; Zurück zur FOCUS-Variante</a>
+  <h1>MIXB2C-6112 — Erklär-Element <em>Playful</em></h1>
+  <p>
+    Dieselben Inhalte, dieselbe Technik — aber ein <strong>moderner, verspielter
+    Look</strong>: abgerundete Rahmen, kräftige Akzentfarben, Pill-Buttons und
+    Badges. Die Akzentfarbe <strong>rotiert automatisch</strong> pro Kachel
+    (Lime → Blau → Coral → Violett), die Redaktion muss also keine Farbe wählen
+    und eine Reihe ist trotzdem bunt. Schrift bleibt <strong>NeueDIN</strong>.
+    Die Texte sind weiterhin bewusst <strong>unterschiedlich lang</strong> —
+    Kacheln bleiben gleich hoch und die Buttons liegen auf einer Linie.
+  </p>
+</header>
+
+<!-- =================== VERSION P1 =================== -->
+<section class="doc-section">
+  <h2>P1 — Farbfläche</h2>
+  <p>Bild oben, darunter eine komplett farbige Fläche. Der lauteste Auftritt — gut für eine Reihe, die die Seite tragen soll.</p>
+</section>
+
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--3">
+    <article class="teaser teaser--block">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1000x800/565169598f/partner-program.jpg/m/760x570/filters:quality(80)" alt="FOCUS Partner Programm">
+      </div>
+      <div class="teaser__body">
+        <span class="teaser__tag">Partner</span>
+        <h3 class="teaser__headline">Mehr Engagement. Mehr Unterstützung. Mehr Wachstum.</h3>
+        <p class="teaser__text">Das FOCUS Partner Programm wurde entwickelt, um Engagement zu belohnen und in die Partner zu investieren, die mit uns wachsen wollen. Je stärker dein Engagement für FOCUS, desto stärker unser Engagement für dein Geschäft.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">FOCUS Partner Programm</a></div>
+      </div>
+    </article>
+
+    <article class="teaser teaser--block">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/4cdcb005ce/_h4a7684-3.jpg/m/760x570/filters:quality(80)" alt="Demo Truck Tour">
+      </div>
+      <div class="teaser__body">
+        <span class="teaser__tag">Event</span>
+        <h3 class="teaser__headline">Dein Event mit einer kompletten Testflotte von uns</h3>
+        <p class="teaser__text">Gib deinem Event einen extra Push mit 15 Testrädern. Unser Demo Truck bietet eine ideale Gelegenheit, mehr Menschen durch Testfahrten zu begeistern. Einfach vor der Saison beantragen.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Demo Truck Tour</a></div>
+      </div>
+    </article>
+
+    <article class="teaser teaser--block">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/0042d1fbde/my24-focus-izalco-max-9-9-izalco-max-9-8-mike-vlietstra-7683-1.jpg/m/760x570/filters:quality(80)" alt="Local Hero Programm">
+      </div>
+      <div class="teaser__body">
+        <span class="teaser__tag">Community</span>
+        <h3 class="teaser__headline">Hol dir zwei Räder für deine Local Heroes</h3>
+        <p class="teaser__text">Zwei Räder zum speziellen Preis. Statte damit deine lokalen Meinungsführer:innen aus, veranstalte Community Rides und profitiere von ihrer Social Media-Präsenz.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Local Hero Programm</a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<hr class="doc-rule">
+
+<!-- =================== VERSION P2 =================== -->
+<section class="doc-section">
+  <h2>P2 — Outline + Sticker</h2>
+  <p>Weiße Kachel, kräftiger schwarzer Rahmen, Bild oben und ein schräger Sticker als Blickfang. Ruhiger als P1, aber immer noch verspielt.</p>
+</section>
+
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--3">
+    <article class="teaser teaser--sticker">
+      <span class="teaser__sticker">Neu</span>
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1000x800/565169598f/partner-program.jpg/m/760x570/filters:quality(80)" alt="FOCUS Partner Programm">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Mehr Engagement. Mehr Unterstützung. Mehr Wachstum.</h3>
+        <p class="teaser__text">Das FOCUS Partner Programm wurde entwickelt, um Engagement zu belohnen und in die Partner zu investieren, die mit uns wachsen wollen.</p>
+        <div class="teaser__action">
+          <a class="teaser__button" href="#">Partner Programm</a>
+          <a class="teaser__circle" href="#" aria-label="Mehr erfahren">&rarr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="teaser teaser--sticker">
+      <span class="teaser__sticker">Tour 2026</span>
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/4cdcb005ce/_h4a7684-3.jpg/m/760x570/filters:quality(80)" alt="Demo Truck Tour">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Dein Event mit einer kompletten Testflotte von uns</h3>
+        <p class="teaser__text">Gib deinem Event einen extra Push mit 15 Testrädern. Unser Demo Truck bietet eine ideale Gelegenheit, mehr Menschen durch Testfahrten zu begeistern. Einfach vor der Saison beantragen und Termin sichern.</p>
+        <div class="teaser__action">
+          <a class="teaser__button" href="#">Demo Truck</a>
+          <a class="teaser__circle" href="#" aria-label="Mehr erfahren">&rarr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="teaser teaser--sticker">
+      <span class="teaser__sticker">Limitiert</span>
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/0042d1fbde/my24-focus-izalco-max-9-9-izalco-max-9-8-mike-vlietstra-7683-1.jpg/m/760x570/filters:quality(80)" alt="Local Hero Programm">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Hol dir zwei Räder für deine Local Heroes</h3>
+        <p class="teaser__text">Zwei Räder zum speziellen Preis für deine lokalen Meinungsführer:innen.</p>
+        <div class="teaser__action">
+          <a class="teaser__button" href="#">Local Hero</a>
+          <a class="teaser__circle" href="#" aria-label="Mehr erfahren">&rarr;</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<hr class="doc-rule">
+
+<!-- =================== VERSION P3 =================== -->
+<section class="doc-section">
+  <h2>P3 — Ohne Bild, nummeriert</h2>
+  <p>Für reine Textabschnitte. Die große Nummer in Akzentfarbe ersetzt das Bild als Blickfang und gibt der Reihe eine Leserichtung.</p>
+</section>
+
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--4">
+    <article class="teaser teaser--numbered">
+      <div class="teaser__body">
+        <span class="teaser__index">01</span>
+        <h3 class="teaser__headline">Bestelle Bikes, Ersatz- und Anbauteile</h3>
+        <p class="teaser__text">Unser Dealer Portal bietet dir die Möglichkeit, einfach und schnell alle Bikes zu bestellen. Außerdem findest du alle Ersatzteile und speziellen Anbauteile von FOCUS im System.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Dealer Portal <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--numbered">
+      <div class="teaser__body">
+        <span class="teaser__index">02</span>
+        <h3 class="teaser__headline">Übersicht aktuelle und zukünftige Bikes</h3>
+        <p class="teaser__text">Der komplette Überblick über unser aktuelles Lineup und alles, was kommt.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Lineup <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--numbered">
+      <div class="teaser__body">
+        <span class="teaser__index">03</span>
+        <h3 class="teaser__headline">Alle visuellen Materialien zum Download</h3>
+        <p class="teaser__text">Hier findest du alle Bilder und Materialien zu unseren Bikes und Kampagnen. Mit der einfachen Suchfunktion findest du schnell alles, was du benötigst.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Media Portal <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--numbered">
+      <div class="teaser__body">
+        <span class="teaser__index">04</span>
+        <h3 class="teaser__headline">Unser Kommunikationskanal</h3>
+        <p class="teaser__text">Hol dir unser Kontaktformular für unseren Service.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Kontakt <span>&rarr;</span></a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<hr class="doc-rule">
+
+<!-- =================== VERSION P4 =================== -->
+<section class="doc-section">
+  <h2>P4 — Kompakt mit Farbkante</h2>
+  <p>Dichte 4er-Reihe. Statt einer Fläche nur eine farbige Kante oben — funktioniert auch, wenn vier davon nebeneinander stehen, ohne laut zu werden.</p>
+</section>
+
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--4">
+    <article class="teaser teaser--compact">
+      <div class="teaser__bar"></div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">FAQ für alle Räder</h3>
+        <p class="teaser__text">Alle Antworten auf deine Fragen zu Technik und Service findest du ganz unten auf den Produktseiten.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--compact">
+      <div class="teaser__bar"></div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Empfehlungen fürs Fahrwerks-Setup</h3>
+        <p class="teaser__text">Für das bestmögliche Fahrerlebnis. Die empfohlenen Fahrwerkseinstellungen findest du auf den Produktseiten der E-Mountainbikes.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--compact">
+      <div class="teaser__bar"></div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Explosionszeichnungen</h3>
+        <p class="teaser__text">Auf der Produktseite findest du unter „Technische Hilfe“ Explosionszeichnungen, mit denen du jedes Bauteil ganz einfach zuordnen kannst.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--compact">
+      <div class="teaser__bar"></div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Größenfinder</h3>
+        <p class="teaser__text">Nutze „Finde deine Größe“ direkt auf der Produktseite.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Mehr erfahren <span>&rarr;</span></a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<hr class="doc-rule">
+
+<!-- =================== VERSION P5 =================== -->
+<section class="doc-section">
+  <h2>P5 — Bild seitlich</h2>
+  <p>Für längere Erklärungen, ein bis zwei pro Reihe. Auf Mobil stapelt sich das Bild wieder nach oben.</p>
+</section>
+
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--2">
+    <article class="teaser teaser--side teaser--sticker">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/4cdcb005ce/_h4a7684-3.jpg/m/760x760/filters:quality(80)" alt="FAQ">
+      </div>
+      <div class="teaser__body">
+        <span class="teaser__tag">Service</span>
+        <h3 class="teaser__headline">FAQ für alle Räder</h3>
+        <p class="teaser__text">Alle Antworten auf deine Fragen zu Technik und Service findest du ganz unten auf den jeweiligen Produktseiten — von der ersten Inspektion bis zur Pflege.</p>
+        <div class="teaser__action">
+          <a class="teaser__button" href="#">Zum FAQ</a>
+          <a class="teaser__circle" href="#" aria-label="Mehr erfahren">&rarr;</a>
+        </div>
+      </div>
+    </article>
+    <article class="teaser teaser--side teaser--sticker">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1396x1116/0042d1fbde/my24-focus-izalco-max-9-9-izalco-max-9-8-mike-vlietstra-7683-1.jpg/m/760x760/filters:quality(80)" alt="Fahrwerks-Setup">
+      </div>
+      <div class="teaser__body">
+        <span class="teaser__tag">Setup</span>
+        <h3 class="teaser__headline">Empfehlungen fürs Fahrwerks-Setup</h3>
+        <p class="teaser__text">Für das bestmögliche Fahrerlebnis. Die empfohlenen Fahrwerkseinstellungen findest du auf den Produktseiten der E-Mountainbikes, aufgeteilt nach Federweg und Gewicht.</p>
+        <div class="teaser__action">
+          <a class="teaser__button" href="#">Zum Setup</a>
+          <a class="teaser__circle" href="#" aria-label="Mehr erfahren">&rarr;</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<hr class="doc-rule">
+
+<!-- =================== MIXED =================== -->
+<section class="doc-section">
+  <h2>Mischung in einer Reihe</h2>
+  <p>Mit und ohne Bild, kurz und lang, nebeneinander — der Härtetest. Kacheln bleiben gleich hoch, die Links liegen auf einer Linie.</p>
+</section>
+
+<div class="doc-stage">
+  <div class="teaser-row teaser-row--3">
+    <article class="teaser teaser--sticker">
+      <div class="teaser__media">
+        <img src="https://a.storyblok.com/f/201390/1000x800/565169598f/partner-program.jpg/m/760x570/filters:quality(80)" alt="Partner Programm">
+      </div>
+      <div class="teaser__body">
+        <h3 class="teaser__headline">Mit Bild, kurzer Text</h3>
+        <p class="teaser__text">Zwei Sätze reichen hier völlig. Der Button bleibt trotzdem unten.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Partner Programm</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--block">
+      <div class="teaser__body">
+        <span class="teaser__tag">Kontakt</span>
+        <h3 class="teaser__headline">Ohne Bild, Farbfläche</h3>
+        <p class="teaser__text">Diese Kachel hat kein Bild und dafür einen spürbar längeren Text, der über mehrere Zeilen läuft und damit die Höhe der ganzen Reihe bestimmt. Genau dieser Fall bricht heute die Ausrichtung auf der Welcome-Partner-Seite.</p>
+        <div class="teaser__action"><a class="teaser__button" href="#">Kontaktformular</a></div>
+      </div>
+    </article>
+    <article class="teaser teaser--numbered">
+      <div class="teaser__body">
+        <span class="teaser__index">03</span>
+        <h3 class="teaser__headline">Nummeriert, mittellang</h3>
+        <p class="teaser__text">Auf der Produktseite findest du unter „Technische Hilfe“ alle Explosionszeichnungen zum Download.</p>
+        <div class="teaser__action"><a class="teaser__arrow" href="#">Zum Download <span>&rarr;</span></a></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div style="height:60px"></div>
+
+</body>
+</html>
